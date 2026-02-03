@@ -63,7 +63,7 @@ export default function VisualPromptGenerator() {
     return (
         <div className="flex min-h-screen bg-white dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-52 flex flex-col">
                 <DashboardHeader title="Visual Prompt Generator" />
                 <main className="flex-1 p-8">
                     <div className="max-w-6xl mx-auto space-y-8">

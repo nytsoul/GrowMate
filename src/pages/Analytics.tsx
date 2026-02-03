@@ -75,7 +75,7 @@ export default function Analytics() {
     return (
         <div className="flex min-h-screen bg-white dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-52 flex flex-col">
                 <DashboardHeader title="Analytics" />
 
                 <main className="flex-1 p-8 space-y-7">

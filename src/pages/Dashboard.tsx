@@ -27,7 +27,7 @@ export default function Dashboard() {
     return (
         <div className="flex min-h-screen bg-white dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-52 flex flex-col">
                 <DashboardHeader />
 
                 <main className="flex-1 p-8 space-y-8 overflow-y-auto">
@@ -98,7 +98,6 @@ export default function Dashboard() {
                                             ))}
                                         </ul>
                                         <div className="flex gap-3">
-                                            <Link to="/strategy" className="btn-primary text-sm px-5 py-2">Refine Strategy</Link>
                                             <button className="btn-secondary text-sm px-5 py-2">Download PDF</button>
                                         </div>
                                     </div>

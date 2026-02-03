@@ -42,7 +42,7 @@ export default function CompetitorEngine() {
     return (
         <div className="flex min-h-screen bg-white dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-52 flex flex-col">
                 <DashboardHeader title="Competitor Engine" />
                 <main className="flex-1 p-8">
                     <div className="max-w-5xl mx-auto space-y-8">

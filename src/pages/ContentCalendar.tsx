@@ -25,6 +25,7 @@ const contentTypes = [
 
 export default function ContentCalendar() {
     const [currentDate, setCurrentDate] = useState(new Date())
+    const [selectedDay, setSelectedDay] = useState<number | null>(null)
 
     const currentMonth = currentDate.getMonth()
     const currentYear = currentDate.getFullYear()
@@ -57,9 +58,14 @@ export default function ContentCalendar() {
             const isToday = new Date().getDate() === day && 
                            new Date().getMonth() === currentMonth && 
                            new Date().getFullYear() === currentYear
+            const isSelected = selectedDay === day
             
             days.push(
-                <div key={day} className={`p-2 min-h-[80px] border border-gray-200 dark:border-dark-600 relative cursor-pointer hover:bg-gray-50 dark:hover:bg-dark-700 ${isToday ? 'bg-brand-green/10 border-brand-green' : ''}`}>
+                <div
+                    key={day}
+                    onClick={() => setSelectedDay(day)}
+                    className={`p-2 min-h-[80px] border border-gray-200 dark:border-dark-600 relative cursor-pointer hover:bg-gray-50 dark:hover:bg-dark-700 ${isToday ? 'bg-brand-green/10 border-brand-green' : ''} ${isSelected ? 'ring-2 ring-brand-green' : ''}`}
+                >
                     <span className={`text-sm font-medium ${isToday ? 'text-brand-green' : 'text-dark-900 dark:text-white'}`}>
                         {day}
                     </span>
@@ -83,7 +89,7 @@ export default function ContentCalendar() {
     return (
         <div className="flex min-h-screen bg-white dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-52 flex flex-col">
                 <DashboardHeader title="Content Calendar" />
                 <main className="flex-1 p-8">
                     <div className="max-w-7xl mx-auto">
@@ -183,6 +189,35 @@ export default function ContentCalendar() {
                                 {renderCalendarDays()}
                             </div>
                         </div>
+                        {/* Selected day details */}
+                        {selectedDay && (
+                            <div className="card mt-6">
+                                <h3 className="text-lg font-bold text-dark-900 dark:text-white mb-4">Events on {months[currentMonth]} {selectedDay}, {currentYear}</h3>
+                                <div className="space-y-3">
+                                    {getDayEvents(selectedDay).map((event, idx) => {
+                                        const contentType = contentTypes.find(type => type.id === event.type)
+                                        return (
+                                            <div
+                                                key={idx}
+                                                className="flex items-center gap-4 p-3 bg-gray-50 dark:bg-dark-700 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-600"
+                                                onClick={() => alert(`${event.title} (${contentType?.label}) at ${event.time}`)}
+                                            >
+                                                <div className={`w-10 h-10 rounded-lg ${contentType?.color} flex items-center justify-center text-white`}> 
+                                                    {contentType?.icon}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <h4 className="font-medium text-dark-900 dark:text-white">{event.title}</h4>
+                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                        {event.time}
+                                                    </p>
+                                                </div>
+                                                <span className="text-sm font-medium text-brand-green">{contentType?.label}</span>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Upcoming Content */}
                         <div className="card">

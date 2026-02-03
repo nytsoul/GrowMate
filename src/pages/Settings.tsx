@@ -23,7 +23,7 @@ export default function Settings() {
   return (
     <div className="flex min-h-screen bg-white dark:bg-dark-900 text-dark-900 dark:text-white">
       <Sidebar />
-      <div className="flex-1 ml-52 flex flex-col">
+      <div className="flex-1 sm:ml-52 flex flex-col">
         <DashboardHeader title="Settings" />
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
           {/* Profile Information */}

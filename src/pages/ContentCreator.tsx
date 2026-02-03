@@ -33,7 +33,7 @@ export default function ContentCreator() {
     return (
         <div className="flex min-h-screen bg-white dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-52 flex flex-col">
                 <DashboardHeader title="Creator Tool" />
                 <main className="flex-1 p-8">
                     <div className="max-w-7xl mx-auto px-8 py-8 grid lg:grid-cols-[1fr_400px] gap-8">
