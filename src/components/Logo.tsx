@@ -21,7 +21,7 @@ export default function Logo({ size = 'md', className }: LogoProps) {
                 <div className="absolute inset-0 rounded-xl bg-brand-green opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
             </div>
             <span className={clsx('font-bold text-dark-900 dark:text-white', sizes[size].text)}>
-                GrowMate <span className="text-brand-green">AI</span>
+                GrowMate <span className="text-brand-green"></span>
             </span>
         </Link>
     )

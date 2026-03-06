@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -17,8 +17,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       const stored = localStorage.getItem('theme');
       if (stored === 'light' || stored === 'dark') return stored;
-    } catch {}
-    return 'light';
+    } catch {
+      // Ignore localStorage access errors (e.g. private mode restrictions).
+    }
+    return 'dark';
   });
 
   useEffect(() => {
@@ -30,7 +32,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
     try {
       localStorage.setItem('theme', theme);
-    } catch {}
+    } catch {
+      // Ignore localStorage write errors.
+    }
   }, [theme]);
 
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
@@ -42,6 +46,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
   return useContext(ThemeContext);
 }

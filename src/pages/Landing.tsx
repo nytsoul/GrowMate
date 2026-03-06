@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Play, TrendingUp, Globe, Target, Zap, ChevronRight, Star, Users, BarChart3, Languages } from 'lucide-react'
+import { ArrowRight, Play, TrendingUp, Globe, Target, Zap } from 'lucide-react'
 import Logo from '../components/Logo'
 import CircularRing from '../components/CircularRing'
 
@@ -61,7 +61,7 @@ export default function Landing() {
                 {/* Green glow */}
                 <div className="absolute top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial from-brand-green/10 to-transparent blur-3xl pointer-events-none" />
 
-                <div className="relative max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+                <div className="relative w-full px-2 sm:px-0 grid lg:grid-cols-2 gap-12 items-center">
                     {/* Left copy */}
                     <div>
                         <div className="inline-flex items-center gap-2 badge-green mb-6 animate-float">
@@ -134,7 +134,7 @@ export default function Landing() {
 
             {/* Stats */}
             <section className="py-12 border-y border-gray-200 dark:border-dark-600">
-                <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div className="w-full px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                     {stats.map(({ value, label }) => (
                         <div key={label}>
                             <p className="text-3xl font-black text-gradient mb-1">{value}</p>
@@ -146,13 +146,13 @@ export default function Landing() {
 
             {/* Features */}
             <section className="py-20 px-6">
-                <div className="max-w-5xl mx-auto">
+                <div className="w-full px-6">
                     <div className="text-center mb-14">
                         <h2 className="text-3xl lg:text-4xl font-black mb-4">
                             Tailored for the <span className="text-gradient">Next Billion Users</span>
                         </h2>
                         <p className="text-gray-400 max-w-lg mx-auto">
-                            GrowMate AI provides specialized tools to help you dominate the digital landscape through advanced regional intelligence.
+                            GrowMate provides specialized tools to help you dominate the digital landscape through advanced regional intelligence.
                         </p>
                     </div>
 
@@ -172,7 +172,7 @@ export default function Landing() {
 
             {/* CTA */}
             <section className="py-20 px-6">
-                <div className="max-w-2xl mx-auto text-center">
+                <div className="w-full px-6 text-center">
                     <div className="relative card p-12 overflow-hidden">
                         <div className="absolute inset-0 bg-glow-green" />
                         <div className="relative">
@@ -180,7 +180,7 @@ export default function Landing() {
                                 Ready to scale your <span className="text-gradient">digital presence?</span>
                             </h2>
                             <p className="text-gray-600 dark:text-gray-400 mb-8">
-                                Join thousands of Indian businesses using GrowMate AI to turn their content into a conversion engine.
+                                Join thousands of Indian businesses using GrowMate to turn their content into a conversion engine.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                 <Link to="/dashboard" className="btn-primary px-8 py-3">
@@ -198,7 +198,7 @@ export default function Landing() {
 
             {/* Footer */}
             <footer className="w-full border-t border-gray-200 dark:border-dark-600 py-12">
-                <div className="max-w-5xl mx-auto px-6">
+                <div className="w-full px-6">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
                         <div className="col-span-2 md:col-span-1">
                             <Logo className="mb-3" />
@@ -231,7 +231,7 @@ export default function Landing() {
                     </div>
 
                     <div className="border-t border-dark-600 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-600">
-                        <p>© 2024 GrowMate AI. Built for Bharat.</p>
+                        <p>© 2024 GrowMate. Built for Bharat.</p>
                         <div className="flex items-center gap-4">
                             <span>🇮🇳 English</span>
                             <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-brand-green" /> All Systems Operational</span>

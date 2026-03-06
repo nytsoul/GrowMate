@@ -9,10 +9,12 @@
     box-sizing: border-box;
   }
 
+  /* light mode by default */
   body {
-    @apply bg-gray-50 text-gray-900 font-sans antialiased;
+    @apply bg-white text-dark-900 font-sans antialiased;
   }
 
+  /* dark mode overrides */
   .dark body {
     @apply bg-dark-900 text-white;
   }
@@ -22,15 +24,9 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
-  }
-  .dark ::-webkit-scrollbar-track {
     background: #0d1117;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded;
-  }
-  .dark ::-webkit-scrollbar-thumb {
     background: #1e2a40;
     border-radius: 3px;
   }
@@ -45,11 +41,11 @@
   }
 
   .btn-secondary {
-    @apply border border-gray-300 text-gray-600 font-semibold px-5 py-2.5 rounded-lg hover:border-brand-green hover:text-brand-green transition-all duration-200 active:scale-95 dark:border-dark-500 dark:text-gray-300;
+    @apply border border-[#1e2535] text-gray-300 font-semibold px-5 py-2.5 rounded-lg hover:border-brand-green hover:text-brand-green transition-all duration-200 active:scale-95;
   }
 
   .card {
-    @apply bg-white border border-gray-200 rounded-xl p-5 transition-all duration-200 dark:bg-dark-700 dark:border-dark-500;
+    @apply bg-[#141b26] border border-[#1e2535] rounded-xl p-5 transition-all duration-200;
   }
 
   .card-hover {
@@ -65,7 +61,7 @@
   }
 
   .nav-link {
-    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200 font-medium text-sm dark:text-gray-400 dark:hover:text-white dark:hover:bg-dark-600;
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#1a2235] transition-all duration-200 font-medium text-sm;
   }
 
   .nav-link-active {
@@ -81,7 +77,7 @@
   }
 
   .input-field {
-    @apply w-full bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all duration-200 text-sm dark:bg-dark-900 dark:border-dark-500 dark:text-white dark:placeholder-gray-600;
+    @apply w-full bg-[#0d1117] border border-[#1e2535] text-white placeholder-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green/30 transition-all duration-200 text-sm;
   }
 
   .select-field {
@@ -89,11 +85,11 @@
   }
 
   .section-title {
-    @apply text-xl font-bold text-gray-900 dark:text-white;
+    @apply text-xl font-bold text-white;
   }
 
   .section-sub {
-    @apply text-sm text-gray-500 dark:text-gray-400;
+    @apply text-sm text-gray-400;
   }
 }
 

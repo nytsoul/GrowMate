@@ -1,27 +1,7 @@
 import { useState } from 'react'
-import { Plus, Link2, Briefcase, BarChart3, TrendingUp, TrendingDown, Lightbulb, Target, Zap, Eye } from 'lucide-react'
+import { Plus, Link2, Briefcase, TrendingUp, TrendingDown, Lightbulb, Target, Zap, Eye } from 'lucide-react'
 import Sidebar from '../components/Sidebar'
 import DashboardHeader from '../components/DashboardHeader'
-
-const benchmarkCards = [
-    {
-        icon: '🎨', title: 'Content Style',
-        detail: 'High-energy, Hinglish commentary, focuses on budget smartphones with fast-cut editing.',
-        metric: 'Visual Appeal', value: 85,
-    },
-    {
-        icon: '📅', title: 'Posting Frequency',
-        detail: null,
-        freq: '4.2', freqLabel: 'posts/week',
-        bars: [4, 3, 3, 2, 4, 3, 5],
-    },
-    {
-        icon: '📈', title: 'Engagement Trend',
-        detail: null,
-        engBars: [2, 2, 3, 2, 3, 4, 5],
-        engLabel: '+12.4% vs last month',
-    },
-]
 
 const gaps = [
     { num: '01', title: 'Unsolved Regional Language Needs', desc: "Competitor only uses Hindi/English. There's a 40% higher engagement potential if you provide technical guides in Marathi or Bengali for this niche." },
@@ -40,12 +20,12 @@ export default function CompetitorEngine() {
     const [analyzed, setAnalyzed] = useState(false)
 
     return (
-        <div className="flex min-h-screen bg-white dark:bg-dark-900">
+        <div className="flex min-h-screen bg-[#0d1117]">
             <Sidebar />
-            <div className="flex-1 sm:ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-[210px] flex flex-col">
                 <DashboardHeader title="Competitor Engine" />
                 <main className="flex-1 p-8">
-                    <div className="max-w-5xl mx-auto space-y-8">
+                    <div className="w-full px-2 sm:px-0 space-y-8">
                         {/* Header */}
                         <div className="flex items-start justify-between">
                             <div>
@@ -247,7 +227,7 @@ export default function CompetitorEngine() {
 
                         {/* Footer */}
                         <div className="flex items-center justify-between text-xs text-gray-600 border-t border-dark-600 pt-6">
-                            <span className="flex items-center gap-2"><span className="text-brand-green text-base">⚡</span> 2024 GrowMate AI. Tailored for Indian Creators.</span>
+                            <span className="flex items-center gap-2"><span className="text-brand-green text-base">⚡</span> 2024 GrowMate. Tailored for Indian Creators.</span>
                             <div className="flex gap-5">
                                 <a href="#" className="hover:text-gray-400 transition-colors">Privacy Policy</a>
                                 <a href="#" className="hover:text-gray-400 transition-colors">Terms of Service</a>

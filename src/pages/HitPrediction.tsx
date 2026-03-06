@@ -1,4 +1,4 @@
-import { Share2, Download, Crown, Clock, Lightbulb, Hash, Eye, TrendingUp, BarChart3, CheckCircle2, ChevronRight, Zap, Target } from 'lucide-react'
+import { Share2, Download, Crown, Clock, Lightbulb, Hash, Eye, TrendingUp, BarChart3, CheckCircle2, ChevronRight, Zap } from 'lucide-react'
 import Sidebar from '../components/Sidebar'
 import DashboardHeader from '../components/DashboardHeader'
 import CircularRing from '../components/CircularRing'
@@ -18,12 +18,12 @@ const tips = [
 
 export default function HitPrediction() {
     return (
-        <div className="flex min-h-screen bg-white dark:bg-dark-900">
+        <div className="flex min-h-screen bg-[#0d1117]">
             <Sidebar />
-            <div className="flex-1 sm:ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-[210px] flex flex-col">
                 <DashboardHeader title="Post Lab - Hit Prediction" />
                 <main className="flex-1 p-8">
-                    <div className="max-w-5xl mx-auto space-y-6">
+                    <div className="w-full px-2 sm:px-0 space-y-6">
                         {/* Breadcrumb */}
                         <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
                             <span className="hover:text-dark-900 dark:hover:text-white transition-colors cursor-pointer">Post Lab</span>
@@ -167,7 +167,7 @@ export default function HitPrediction() {
 
                         {/* Footer */}
                         <div className="text-center text-xs text-gray-600 dark:text-gray-400 mt-10">
-                            © 2024 GrowMate AI · Empowering Bharat's Creators. Made with ❤️ in Bangalore.
+                            © 2024 GrowMate · Empowering Bharat's Creators. Made with ❤️ in Bangalore.
                         </div>
                     </div>
                 </main>

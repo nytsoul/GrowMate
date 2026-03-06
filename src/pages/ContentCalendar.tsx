@@ -1,249 +1,228 @@
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, Plus, Calendar, Clock, Users, BarChart3 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import DashboardHeader from '../components/DashboardHeader'
+import { Plus, ChevronLeft, ChevronRight, Calendar, Clock, Edit3, Trash2, Share2, Instagram, Lightbulb } from 'lucide-react'
 
-const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+const scheduledPosts = [
+    { day: 14, time: '10:00', title: '5 Tips for Str...', score: 92, color: 'bg-indigo-600' },
+    { day: 14, time: '02:00', title: 'Quick Marke...', score: 85, color: 'bg-brand-green' },
+    { day: 15, time: '', title: 'BEST SLOT', score: 0, color: 'bg-blue-500' },
+    { day: 16, time: '06:30', title: 'New Product...', score: 88, color: 'bg-indigo-600' },
+    { day: 18, time: '09:00', title: 'Weekly Roun...', score: 65, color: 'bg-amber-500' },
 ]
 
-const mockEvents = [
-    { date: 15, title: 'Product Launch Post', type: 'instagram', time: '10:00 AM' },
-    { date: 18, title: 'Educational Story Series', type: 'stories', time: '2:30 PM' },
-    { date: 22, title: 'Customer Testimonial Video', type: 'youtube', time: '6:00 PM' },
-    { date: 25, title: 'Festive Season Campaign', type: 'instagram', time: '11:00 AM' },
-    { date: 28, title: 'Behind the Scenes Reel', type: 'reels', time: '4:00 PM' }
-]
-
-const contentTypes = [
-    { id: 'instagram', label: 'Instagram Post', color: 'bg-pink-500', icon: '📷' },
-    { id: 'stories', label: 'Stories', color: 'bg-purple-500', icon: '📱' },
-    { id: 'reels', label: 'Reels', color: 'bg-orange-500', icon: '🎬' },
-    { id: 'youtube', label: 'YouTube Video', color: 'bg-red-500', icon: '🎥' }
-]
+const daysInMonth = 30
+const startDay = 5 // Nov 2024 starts on Friday (0=Sun)
 
 export default function ContentCalendar() {
-    const [currentDate, setCurrentDate] = useState(new Date())
-    const [selectedDay, setSelectedDay] = useState<number | null>(null)
+    const [, setSelectedPost] = useState<typeof scheduledPosts[0] | null>(scheduledPosts[0])
+    const [view, setView] = useState<'Month' | 'Week' | 'Day'>('Month')
 
-    const currentMonth = currentDate.getMonth()
-    const currentYear = currentDate.getFullYear()
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()
+    const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
+    const blanks = Array.from({ length: startDay }, (_, i) => i)
+    const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
-    const prevMonth = () => {
-        setCurrentDate(new Date(currentYear, currentMonth - 1, 1))
-    }
-
-    const nextMonth = () => {
-        setCurrentDate(new Date(currentYear, currentMonth + 1, 1))
-    }
-
-    const getDayEvents = (day: number) => {
-        return mockEvents.filter(event => event.date === day)
-    }
-
-    const renderCalendarDays = () => {
-        const days = []
-        
-        // Empty cells for days before the first day of month
-        for (let i = 0; i < firstDayOfMonth; i++) {
-            days.push(<div key={`empty-${i}`} className="p-2"></div>)
-        }
-        
-        // Days of the month
-        for (let day = 1; day <= daysInMonth; day++) {
-            const events = getDayEvents(day)
-            const isToday = new Date().getDate() === day && 
-                           new Date().getMonth() === currentMonth && 
-                           new Date().getFullYear() === currentYear
-            const isSelected = selectedDay === day
-            
-            days.push(
-                <div
-                    key={day}
-                    onClick={() => setSelectedDay(day)}
-                    className={`p-2 min-h-[80px] border border-gray-200 dark:border-dark-600 relative cursor-pointer hover:bg-gray-50 dark:hover:bg-dark-700 ${isToday ? 'bg-brand-green/10 border-brand-green' : ''} ${isSelected ? 'ring-2 ring-brand-green' : ''}`}
-                >
-                    <span className={`text-sm font-medium ${isToday ? 'text-brand-green' : 'text-dark-900 dark:text-white'}`}>
-                        {day}
-                    </span>
-                    <div className="mt-1 space-y-1">
-                        {events.map((event, index) => {
-                            const contentType = contentTypes.find(type => type.id === event.type)
-                            return (
-                                <div key={index} className={`text-xs p-1 rounded text-white ${contentType?.color || 'bg-gray-500'} truncate`}>
-                                    {event.title}
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
-            )
-        }
-        
-        return days
-    }
+    const getPostsForDay = (day: number) => scheduledPosts.filter(p => p.day === day)
 
     return (
-        <div className="flex min-h-screen bg-white dark:bg-dark-900">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 sm:ml-52 flex flex-col">
-                <DashboardHeader title="Content Calendar" />
-                <main className="flex-1 p-8">
-                    <div className="max-w-7xl mx-auto">
+            <div className="flex-1 sm:ml-[210px] flex flex-col">
+                <DashboardHeader title="Planner" />
+
+                <main className="flex-1 p-5 sm:p-8 overflow-y-auto">
+                    <div className="w-full px-2 sm:px-0 space-y-5">
                         {/* Header */}
-                        <div className="flex items-center justify-between mb-6">
-                            <div>
-                                <h1 className="text-3xl font-black text-dark-900 dark:text-white mb-2">Content Calendar</h1>
-                                <p className="text-gray-600 dark:text-gray-400">Plan, schedule, and track your content across all platforms</p>
-                            </div>
-                            <button className="btn-primary flex items-center gap-2">
-                                <Plus size={16} /> Schedule Content
-                            </button>
-                        </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Content Planner</h1>
+                            <div className="flex items-center gap-3">
+                                {/* View toggle */}
+                                <div className="flex bg-gray-100 dark:bg-dark-700 rounded-lg p-0.5">
+                                    {(['Month', 'Week', 'Day'] as const).map(v => (
+                                        <button
+                                            key={v}
+                                            onClick={() => setView(v)}
+                                            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                                                view === v
+                                                    ? 'bg-white dark:bg-dark-500 text-gray-900 dark:text-white shadow-sm'
+                                                    : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                                            }`}
+                                        >
+                                            {v}
+                                        </button>
+                                    ))}
+                                </div>
 
-                        {/* Stats */}
-                        <div className="grid md:grid-cols-4 gap-4 mb-6">
-                            <div className="card">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-500">
-                                        <Calendar size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">This Month</p>
-                                        <p className="text-xl font-bold text-dark-900 dark:text-white">24 Posts</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-500">
-                                        <Clock size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">Scheduled</p>
-                                        <p className="text-xl font-bold text-dark-900 dark:text-white">12 Posts</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-500">
-                                        <Users size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">Engagement</p>
-                                        <p className="text-xl font-bold text-dark-900 dark:text-white">+18.5%</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-500">
-                                        <BarChart3 size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">Reach</p>
-                                        <p className="text-xl font-bold text-dark-900 dark:text-white">2.4M</p>
-                                    </div>
-                                </div>
-            </div>
-                        </div>
-
-                        {/* Calendar Header */}
-                        <div className="card mb-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center gap-4">
-                                    <button onClick={prevMonth} className="p-2 hover:bg-gray-100 dark:hover:bg-dark-600 rounded-lg">
-                                        <ChevronLeft size={20} className="text-gray-600 dark:text-gray-400" />
+                                {/* Month navigation */}
+                                <div className="flex items-center gap-2">
+                                    <button className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-600 text-gray-500 transition-colors">
+                                        <ChevronLeft size={16} />
                                     </button>
-                                    <h2 className="text-xl font-bold text-dark-900 dark:text-white">
-                                        {months[currentMonth]} {currentYear}
-                                    </h2>
-                                    <button onClick={nextMonth} className="p-2 hover:bg-gray-100 dark:hover:bg-dark-600 rounded-lg">
-                                        <ChevronRight size={20} className="text-gray-600 dark:text-gray-400" />
+                                    <span className="text-sm font-semibold text-gray-900 dark:text-white min-w-[130px] text-center">November 2024</span>
+                                    <button className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-600 text-gray-500 transition-colors">
+                                        <ChevronRight size={16} />
                                     </button>
                                 </div>
-                                {/* Legend */}
-                                <div className="flex items-center gap-4">
-                                    {contentTypes.map(type => (
-                                        <div key={type.id} className="flex items-center gap-2">
-                                            <div className={`w-3 h-3 rounded ${type.color}`}></div>
-                                            <span className="text-sm text-gray-600 dark:text-gray-400">{type.label}</span>
+
+                                <Link to="/creator">
+                                    <button className="btn-primary text-sm flex items-center gap-1.5">
+                                        <Plus size={14} /> Create Post
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* AI Suggestion Banner */}
+                        <div className="card border-brand-green/20 bg-brand-green/5 dark:bg-brand-green/10 flex items-center gap-3 p-4">
+                            <Lightbulb size={16} className="text-brand-green flex-shrink-0" />
+                            <div className="flex-1">
+                                <span className="text-xs text-brand-green font-semibold">AI Optimization Active</span>
+                                <p className="text-xs text-gray-600 dark:text-gray-400">Based on your niche, 14th Nov (Children's Day) is high-traffic. Consider adding a Bharat-centric festive post.</p>
+                            </div>
+                            <button className="text-xs text-brand-green font-semibold hover:underline whitespace-nowrap">See Suggestions</button>
+                        </div>
+
+                        <div className="grid lg:grid-cols-[1fr_320px] gap-5">
+                            {/* Calendar Grid */}
+                            <div className="card p-0 overflow-hidden">
+                                {/* Week day headers */}
+                                <div className="grid grid-cols-7 border-b border-gray-200 dark:border-dark-500">
+                                    {weekDays.map(d => (
+                                        <div key={d} className="text-center text-[10px] font-semibold text-gray-500 uppercase tracking-wider py-2.5">
+                                            {d}
                                         </div>
                                     ))}
                                 </div>
-                            </div>
 
-                            {/* Calendar Grid */}
-                            <div className="grid grid-cols-7 gap-0 border border-gray-200 dark:border-dark-600 rounded-lg overflow-hidden">
-                                {/* Day headers */}
-                                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                                    <div key={day} className="p-3 bg-gray-100 dark:bg-dark-700 border-r border-gray-200 dark:border-dark-600 last:border-r-0">
-                                        <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{day}</span>
-                                    </div>
-                                ))}
-                                {/* Calendar days */}
-                                {renderCalendarDays()}
-                            </div>
-                        </div>
-                        {/* Selected day details */}
-                        {selectedDay && (
-                            <div className="card mt-6">
-                                <h3 className="text-lg font-bold text-dark-900 dark:text-white mb-4">Events on {months[currentMonth]} {selectedDay}, {currentYear}</h3>
-                                <div className="space-y-3">
-                                    {getDayEvents(selectedDay).map((event, idx) => {
-                                        const contentType = contentTypes.find(type => type.id === event.type)
+                                {/* Calendar cells */}
+                                <div className="grid grid-cols-7">
+                                    {blanks.map(b => (
+                                        <div key={`blank-${b}`} className="min-h-[90px] border-b border-r border-gray-100 dark:border-dark-600" />
+                                    ))}
+                                    {days.map(day => {
+                                        const posts = getPostsForDay(day)
+                                        const isToday = day === 14
                                         return (
                                             <div
-                                                key={idx}
-                                                className="flex items-center gap-4 p-3 bg-gray-50 dark:bg-dark-700 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-600"
-                                                onClick={() => alert(`${event.title} (${contentType?.label}) at ${event.time}`)}
+                                                key={day}
+                                                className={`min-h-[90px] p-1.5 border-b border-r border-gray-100 dark:border-dark-600 hover:bg-gray-50 dark:hover:bg-dark-600/50 transition-colors cursor-pointer`}
+                                                onClick={() => posts.length > 0 && setSelectedPost(posts[0])}
                                             >
-                                                <div className={`w-10 h-10 rounded-lg ${contentType?.color} flex items-center justify-center text-white`}> 
-                                                    {contentType?.icon}
+                                                <span className={`text-xs font-medium inline-flex items-center justify-center w-6 h-6 rounded-full ${
+                                                    isToday ? 'bg-indigo-600 text-white' : 'text-gray-600 dark:text-gray-400'
+                                                }`}>
+                                                    {day}
+                                                </span>
+                                                <div className="mt-1 space-y-1">
+                                                    {posts.map((post, i) => (
+                                                        <button
+                                                            key={i}
+                                                            onClick={e => { e.stopPropagation(); setSelectedPost(post) }}
+                                                            className={`w-full text-left text-[10px] ${post.color} text-white rounded px-1.5 py-0.5 truncate flex items-center gap-1`}
+                                                        >
+                                                            {post.time && <span>{post.time}</span>}
+                                                            {post.score > 0 && <span className="font-bold">{post.score}%</span>}
+                                                            <span className="truncate">{post.title}</span>
+                                                        </button>
+                                                    ))}
                                                 </div>
-                                                <div className="flex-1">
-                                                    <h4 className="font-medium text-dark-900 dark:text-white">{event.title}</h4>
-                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                        {event.time}
-                                                    </p>
-                                                </div>
-                                                <span className="text-sm font-medium text-brand-green">{contentType?.label}</span>
                                             </div>
                                         )
                                     })}
                                 </div>
                             </div>
-                        )}
 
-                        {/* Upcoming Content */}
-                        <div className="card">
-                            <h3 className="text-lg font-bold text-dark-900 dark:text-white mb-4">Upcoming Content</h3>
-                            <div className="space-y-3">
-                                {mockEvents.slice(0, 3).map((event, index) => {
-                                    const contentType = contentTypes.find(type => type.id === event.type)
-                                    return (
-                                        <div key={index} className="flex items-center gap-4 p-3 bg-gray-50 dark:bg-dark-700 rounded-lg">
-                                            <div className={`w-10 h-10 rounded-lg ${contentType?.color} flex items-center justify-center text-white`}>
-                                                {contentType?.icon}
-                                            </div>
-                                            <div className="flex-1">
-                                                <h4 className="font-medium text-dark-900 dark:text-white">{event.title}</h4>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                    {months[currentMonth]} {event.date}, {currentYear} at {event.time}
-                                                </p>
-                                            </div>
-                                            <span className="text-sm font-medium text-brand-green">{contentType?.label}</span>
+                            {/* Post Preview Sidebar */}
+                            <div className="space-y-4">
+                                <div className="card">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Post Preview</h3>
+                                        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                                            <Instagram size={12} /> Instagram
+                                            <ChevronRight size={12} />
                                         </div>
-                                    )
-                                })}
+                                    </div>
+
+                                    {/* Preview image */}
+                                    <div className="rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 aspect-[4/3] flex items-center justify-center mb-4 relative overflow-hidden">
+                                        <span className="absolute top-2 right-2 text-[10px] bg-black/40 text-white rounded px-1.5 py-0.5 font-bold">IMAGE</span>
+                                        <div className="text-center text-white p-4">
+                                            <p className="text-lg font-bold">5 Tips for</p>
+                                            <p className="text-lg font-bold">Small Business</p>
+                                        </div>
+                                    </div>
+
+                                    {/* AI Hit Score */}
+                                    <div className="bg-gray-50 dark:bg-dark-800 rounded-lg p-3 mb-4">
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <span className="text-xs font-medium text-gray-500 flex items-center gap-1">
+                                                <span className="text-brand-green">✦</span> AI HIT SCORE
+                                            </span>
+                                            <span className="text-sm font-bold text-brand-green">92%</span>
+                                        </div>
+                                        <div className="w-full h-1.5 bg-gray-200 dark:bg-dark-600 rounded-full overflow-hidden">
+                                            <div className="h-full bg-brand-green rounded-full" style={{ width: '92%' }} />
+                                        </div>
+                                        <p className="text-[10px] text-gray-500 mt-2">This post is predicted to go viral in your niche! The timing and hashtags are optimized for Bharat-Mode engagement.</p>
+                                    </div>
+
+                                    {/* Caption/Hashtags tabs */}
+                                    <div className="flex gap-0 mb-3">
+                                        <button className="flex-1 text-xs font-medium text-gray-900 dark:text-white bg-gray-100 dark:bg-dark-600 py-2 rounded-l-lg">Caption</button>
+                                        <button className="flex-1 text-xs font-medium text-gray-500 bg-gray-50 dark:bg-dark-800 py-2 rounded-r-lg">Hashtags</button>
+                                    </div>
+
+                                    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                                        Doston, kya aap apne business ko scale karna chahte hain? 🚀 Here are 5 battle-tested strategies that every Indian entrepreneur needs to know. From local SEO to Bharat-centric marketing, we've got you covered! #StartupIndia #VocalForLocal
+                                    </p>
+
+                                    {/* Schedule details */}
+                                    <div className="grid grid-cols-2 gap-3 mb-4">
+                                        <div>
+                                            <p className="text-[10px] text-gray-500 mb-1">Scheduled Date</p>
+                                            <p className="text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                                                <Calendar size={11} className="text-red-400" /> November 14, 2024
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-gray-500 mb-1">Best Time Slot</p>
+                                            <p className="text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                                                <Clock size={11} className="text-brand-green" /> 10:00 AM
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Actions */}
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <button className="flex items-center justify-center gap-1.5 border border-gray-200 dark:border-dark-500 text-gray-600 dark:text-gray-300 text-xs font-medium py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-600 transition-colors">
+                                            <Edit3 size={12} /> Edit
+                                        </button>
+                                        <button className="flex items-center justify-center gap-1.5 bg-brand-green text-white text-xs font-semibold py-2.5 rounded-lg hover:bg-green-400 transition-colors">
+                                            <Share2 size={12} /> Publish Now
+                                        </button>
+                                    </div>
+
+                                    <button className="w-full mt-3 text-xs text-red-400 hover:text-red-300 flex items-center justify-center gap-1 py-2">
+                                        <Trash2 size={12} /> Delete Schedule
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </main>
+
+                {/* Footer */}
+                <footer className="px-5 py-3 border-t border-gray-200 dark:border-dark-500 bg-white dark:bg-dark-800">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400 dark:text-gray-600">
+                        <p>© 2024 GrowMate. Built for Bharat's Creators.</p>
+                        <div className="flex gap-4">
+                            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-400">Privacy Policy</a>
+                            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-400">Terms of Service</a>
+                            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-400">Help Center</a>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     )

@@ -1,228 +1,293 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Zap, ChevronDown, Instagram, Linkedin, Youtube, MessageSquare, Hash, Calendar, Save, RefreshCw, Share2, BookImage } from 'lucide-react'
 import Sidebar from '../components/Sidebar'
 import DashboardHeader from '../components/DashboardHeader'
-import Logo from '../components/Logo'
+import CircularRing from '../components/CircularRing'
+import { Instagram, Linkedin, Twitter, Youtube, ChevronDown, Sparkles, Info } from 'lucide-react'
 
 const platforms = [
     { id: 'instagram', label: 'Instagram', icon: Instagram },
     { id: 'linkedin', label: 'LinkedIn', icon: Linkedin },
-    { id: 'whatsapp', label: 'WhatsApp', icon: MessageSquare },
-    { id: 'youtube', label: 'YouTube', icon: Youtube },
+    { id: 'twitter', label: 'X (Twitter)', icon: Twitter },
+    { id: 'youtube', label: 'YT Shorts', icon: Youtube },
 ]
 
-const businessTypes = ['E-commerce / D2C', 'B2B Services', 'Local Business', 'Freelancer', 'Creator / Influencer']
-const campaignGoals = ['Sales & Conversions', 'Brand Awareness', 'Community Growth', 'Lead Generation']
-const languages = ['Hinglish', 'Hindi', 'English', 'Tamil', 'Telugu', 'Marathi']
-
 export default function ContentCreator() {
-    const [selectedPlatform, setSelectedPlatform] = useState('instagram')
-    const [selectedLang, setSelectedLang] = useState('Hinglish')
+    const [topic, setTopic] = useState('')
+    const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['instagram'])
+    const [contentGoal, setContentGoal] = useState('Engagement')
+    const [language, setLanguage] = useState('Hindi')
+    const [targetAudience, setTargetAudience] = useState('')
+    const [attentionHook, setAttentionHook] = useState(true)
+    const [callToAction, setCallToAction] = useState(true)
+    const [hashtagBundle, setHashtagBundle] = useState(true)
     const [generated, setGenerated] = useState(false)
-    const [loading, setLoading] = useState(false)
+
+    const togglePlatform = (id: string) => {
+        setSelectedPlatforms(prev =>
+            prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
+        )
+    }
 
     const handleGenerate = () => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-            setGenerated(true)
-        }, 1500)
+        setGenerated(true)
     }
 
     return (
-        <div className="flex min-h-screen bg-white dark:bg-dark-900">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-dark-900">
             <Sidebar />
-            <div className="flex-1 sm:ml-52 flex flex-col">
-                <DashboardHeader title="Creator Tool" />
-                <main className="flex-1 p-8">
-                    <div className="max-w-7xl mx-auto px-8 py-8 grid lg:grid-cols-[1fr_400px] gap-8">
-                {/* Left: Form */}
-                <div>
-                    <h1 className="text-3xl font-black text-white mb-1">AI Content Creator</h1>
-                    <p className="text-gray-400 mb-8 text-sm">Generate high-converting marketing content for your Indian business in seconds.</p>
+            <div className="flex-1 sm:ml-[210px] flex flex-col">
+                <DashboardHeader title="AI Creator" />
 
-                    {/* Bharat Mode */}
-                    <div className="card border-brand-green/30 bg-brand-green/5 flex items-center justify-between mb-6 p-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-brand-green/20 flex items-center justify-center text-brand-green">
-                                <Hash size={16} />
-                            </div>
+                <main className="flex-1 p-5 sm:p-8 overflow-y-auto">
+                    <div className="w-full px-2 sm:px-0 space-y-6">
+                        {/* Header */}
+                        <div className="flex items-start justify-between">
                             <div>
-                                <p className="font-semibold text-white text-sm">Bharat Mode</p>
-                                <p className="text-xs text-gray-500">Optimize for local Indian languages</p>
+                                <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-1">AI Creator Engine</h1>
+                                <p className="text-gray-500 dark:text-gray-400 text-sm">Generate high-impact content in English or your regional language.</p>
                             </div>
+                            <span className="badge-green text-[10px] flex items-center gap-1.5">
+                                <span className="glow-dot" /> Bharat Mode Active
+                            </span>
                         </div>
-                        <div className="relative">
-                            <select
-                                value={selectedLang}
-                                onChange={e => setSelectedLang(e.target.value)}
-                                className="select-field pl-3 pr-8 py-1.5 text-sm appearance-none bg-gray-100 dark:bg-dark-700 border border-gray-300 dark:border-dark-400 text-dark-900 dark:text-white rounded-lg"
-                            >
-                                {languages.map(l => <option key={l}>{l}</option>)}
-                            </select>
-                            <ChevronDown size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                        </div>
-                    </div>
 
-                    {/* Step 1: Platform */}
-                    <div className="mb-6">
-                        <div className="flex items-center gap-3 mb-3">
-                            <div className="w-6 h-6 rounded-full bg-brand-green/20 border border-brand-green/30 flex items-center justify-center text-brand-green text-xs font-bold">1</div>
-                            <h3 className="font-bold text-white">Platform & Strategy</h3>
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            {platforms.map(({ id, label, icon: Icon }) => (
-                                <button
-                                    key={id}
-                                    onClick={() => setSelectedPlatform(id)}
-                                    className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-all duration-200 ${selectedPlatform === id
-                                            ? 'border-brand-green bg-brand-green/10 text-brand-green'
-                                            : 'border-gray-300 bg-gray-100 text-gray-600 hover:border-gray-500 dark:border-dark-500 dark:bg-dark-700 dark:text-gray-400'
-                                        }`}
-                                >
-                                    <Icon size={24} />
-                                    <span className="text-xs font-medium">{label}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Step 2: Business */}
-                    <div className="mb-6">
-                        <div className="flex items-center gap-3 mb-3">
-                            <div className="w-6 h-6 rounded-full bg-brand-green/20 border border-brand-green/30 flex items-center justify-center text-brand-green text-xs font-bold">2</div>
-                            <h3 className="font-bold text-white">Business & Goals</h3>
-                        </div>
-                        <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label className="text-xs text-gray-500 mb-1.5 block">Business Type</label>
-                                <div className="relative">
-                                    <select className="select-field pr-10">
-                                        {businessTypes.map(b => <option key={b}>{b}</option>)}
-                                    </select>
-                                    <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                        <div className="grid lg:grid-cols-[1fr_1fr] gap-6">
+                            {/* Left: Content Parameters */}
+                            <div className="card space-y-5">
+                                <div>
+                                    <h2 className="font-bold text-gray-900 dark:text-white mb-1">Content Parameters</h2>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Tell the AI what you want to create</p>
                                 </div>
-                            </div>
-                            <div>
-                                <label className="text-xs text-gray-500 mb-1.5 block">Campaign Goal</label>
-                                <div className="relative">
-                                    <select className="select-field pr-10">
-                                        {campaignGoals.map(g => <option key={g}>{g}</option>)}
-                                    </select>
-                                    <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+
+                                {/* Topic */}
+                                <div>
+                                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5 block">Topic or Product</label>
+                                    <input
+                                        className="input-field"
+                                        placeholder="e.g., Launching a new range of organic skincare for winter..."
+                                        value={topic}
+                                        onChange={e => setTopic(e.target.value)}
+                                    />
                                 </div>
-                            </div>
-                        </div>
-                        <div>
-                            <label className="text-xs text-gray-500 mb-1.5 block">Target Audience Description</label>
-                            <textarea
-                                className="input-field resize-none h-24"
-                                placeholder="e.g. Gen-Z students in Mumbai looking for sustainable fashion"
-                            />
-                        </div>
-                    </div>
 
-                    {/* Generate button */}
-                    <button
-                        onClick={handleGenerate}
-                        disabled={loading}
-                        className={`w-full py-4 rounded-xl font-bold text-dark-900 flex items-center justify-center gap-2 text-base transition-all duration-200 ${loading
-                                ? 'bg-brand-green/60 cursor-not-allowed'
-                                : 'bg-brand-green hover:bg-brand-green-light shadow-green hover:shadow-green-lg active:scale-[0.98]'
-                            }`}
-                    >
-                        {loading ? (
-                            <><RefreshCw size={18} className="animate-spin" /> Generating...</>
-                        ) : (
-                            <><Zap size={18} className="fill-current" /> Generate Content</>
-                        )}
-                    </button>
-                </div>
-
-                {/* Right: Preview */}
-                <div className="card h-fit sticky top-24">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                            <span className="glow-dot" />
-                            <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Live Draft Preview</span>
-                        </div>
-                        <div className="flex gap-2">
-                            {[BookImage, Share2].map((Icon, i) => (
-                                <button key={i} className="w-8 h-8 rounded-lg bg-dark-600 flex items-center justify-center text-gray-400 hover:text-white transition-colors">
-                                    <Icon size={14} />
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Image placeholder */}
-                    <div className="aspect-square rounded-xl bg-dark-800 border border-dark-500 flex items-center justify-center mb-4 relative overflow-hidden">
-                        {generated ? (
-                            <div className="inset-0 absolute bg-gradient-to-br from-dark-600 to-dark-800 flex items-center justify-center">
-                                <div className="text-center p-6">
-                                    <div className="text-4xl mb-2">👗✨</div>
-                                    <p className="text-sm text-gray-300 font-medium">Utsav Collection</p>
+                                {/* Target Platforms */}
+                                <div>
+                                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">Target Platforms</label>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {platforms.map(({ id, label, icon: Icon }) => (
+                                            <button
+                                                key={id}
+                                                onClick={() => togglePlatform(id)}
+                                                className={`flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium border transition-all ${
+                                                    selectedPlatforms.includes(id)
+                                                        ? 'border-brand-green bg-brand-green/10 text-brand-green'
+                                                        : 'border-gray-200 dark:border-dark-500 text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-dark-400'
+                                                }`}
+                                            >
+                                                <Icon size={16} />
+                                                {label}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        ) : (
-                            <div className="text-center text-dark-400">
-                                <BookImage size={40} className="mx-auto mb-2 opacity-30" />
-                                <p className="text-xs text-gray-600">Suggested Creative</p>
-                            </div>
-                        )}
-                        {generated && (
-                            <span className="absolute bottom-3 left-3 text-xs text-gray-400 bg-dark-900/80 px-2 py-1 rounded-lg">Suggested Creative</span>
-                        )}
-                    </div>
 
-                    {generated ? (
-                        <div className="space-y-4">
-                            <div>
-                                <p className="text-[10px] text-brand-green uppercase tracking-widest mb-1.5 font-semibold">The Hook</p>
-                                <p className="font-bold text-white text-sm leading-snug">Kya aap bhi boring outfit se thak gaye hain? 👗✨</p>
-                            </div>
-                            <div>
-                                <p className="text-[10px] text-brand-green uppercase tracking-widest mb-1.5 font-semibold">Caption</p>
-                                <p className="text-xs text-gray-300 leading-relaxed">
-                                    Stop settling for basic! GrowMate Essentials introduces the 'Utsav Collection' designed for the modern Bharat creator. 🇮🇳
-                                    <br /><br />
-                                    Authentic fabrics, Gen-Z designs, and prices that don't hurt your wallet. Limited drops only!
-                                </p>
-                            </div>
-                            <div>
-                                <p className="text-[10px] text-brand-green uppercase tracking-widest mb-1.5 font-semibold">Recommended Hashtags</p>
-                                <div className="flex flex-wrap gap-1.5">
-                                    {['#MakeInIndia', '#SustainableFashion', '#HinglishCreatives', '#GrowMateStyle'].map(h => (
-                                        <span key={h} className="text-[11px] bg-dark-600 text-gray-300 px-2 py-0.5 rounded-full">{h}</span>
+                                {/* Content Goal & Language */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5 block">Content Goal</label>
+                                        <div className="relative">
+                                            <select
+                                                className="select-field"
+                                                value={contentGoal}
+                                                onChange={e => setContentGoal(e.target.value)}
+                                            >
+                                                <option>Engagement</option>
+                                                <option>Brand Awareness</option>
+                                                <option>Lead Generation</option>
+                                                <option>Sales</option>
+                                            </select>
+                                            <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5 block">Language</label>
+                                        <div className="relative">
+                                            <select
+                                                className="select-field"
+                                                value={language}
+                                                onChange={e => setLanguage(e.target.value)}
+                                            >
+                                                <option>Hindi</option>
+                                                <option>English</option>
+                                                <option>Hinglish</option>
+                                                <option>Tamil</option>
+                                                <option>Marathi</option>
+                                            </select>
+                                            <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Target Audience */}
+                                <div>
+                                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5 block">Target Audience</label>
+                                    <input
+                                        className="input-field"
+                                        placeholder="e.g., Working professionals, 25-35"
+                                        value={targetAudience}
+                                        onChange={e => setTargetAudience(e.target.value)}
+                                    />
+                                </div>
+
+                                {/* Toggles */}
+                                <div className="space-y-3">
+                                    {[
+                                        { label: 'Attention Hook', desc: 'Start with a scroll-stopping line', checked: attentionHook, setter: setAttentionHook },
+                                        { label: 'Call to Action', desc: 'Drive users to specific actions', checked: callToAction, setter: setCallToAction },
+                                        { label: 'Hashtag Bundle', desc: 'Optimized tags for reach', checked: hashtagBundle, setter: setHashtagBundle },
+                                    ].map(({ label, desc, checked, setter }) => (
+                                        <div key={label} className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-sm font-semibold text-red-400">{label}</p>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">{desc}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => setter(!checked)}
+                                                className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ${checked ? 'bg-blue-500' : 'bg-gray-300 dark:bg-dark-500'}`}
+                                            >
+                                                <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${checked ? 'translate-x-5' : 'translate-x-0'}`} />
+                                            </button>
+                                        </div>
                                     ))}
                                 </div>
+
+                                {/* Generate Button */}
+                                <button
+                                    onClick={handleGenerate}
+                                    className="w-full bg-indigo-600 text-white font-semibold rounded-lg py-3 text-sm hover:bg-indigo-500 transition-colors flex items-center justify-center gap-2"
+                                >
+                                    <Sparkles size={16} /> Generate Bharat-Mode Content
+                                </button>
+
+                                {/* Info note */}
+                                <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-3 flex items-start gap-2">
+                                    <Info size={14} className="text-indigo-400 mt-0.5 flex-shrink-0" />
+                                    <p className="text-xs text-indigo-300">GrowMate automatically adjusts tone and cultural context based on your selected language for a native feel.</p>
+                                </div>
                             </div>
-                            <div className="flex items-center justify-between pt-1">
-                                <span className="text-[11px] text-gray-500">AI confidence score: <strong className="text-white">94%</strong></span>
-                                <button className="text-[11px] text-brand-green hover:underline flex items-center gap-1">
-                                    <RefreshCw size={11} /> Refresh Variation
-                                </button>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2 border-t border-dark-600 pt-4">
-                                <button className="flex items-center justify-center gap-1.5 btn-secondary text-xs py-2">
-                                    <Calendar size={12} /> Schedule Post
-                                </button>
-                                <button className="flex items-center justify-center gap-1.5 btn-secondary text-xs py-2">
-                                    <Save size={12} /> Save Template
-                                </button>
+
+                            {/* Right: Results */}
+                            <div className="space-y-5">
+                                {/* Predicted Performance */}
+                                <div className="grid grid-cols-[1fr_auto] gap-4">
+                                    <div className="card">
+                                        <h3 className="font-bold text-gray-900 dark:text-white mb-1">Predicted Performance</h3>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">Based on current platform trends and audience behavior.</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">→ High Potential</p>
+                                        <p className="text-xs text-brand-green mb-3">⏰ Ideal at 6:00 PM</p>
+
+                                        <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest mb-2">AI Quick Fixes</p>
+                                        <div className="space-y-2">
+                                            <div className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-400">
+                                                <Sparkles size={12} className="text-brand-green mt-0.5 flex-shrink-0" />
+                                                Shorten the hook by 10 characters for better mobile retention.
+                                            </div>
+                                            <div className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-400">
+                                                <Info size={12} className="text-gray-400 mt-0.5 flex-shrink-0" />
+                                                Add 3 more emojis to match current Instagram trends.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="card flex flex-col items-center justify-center px-6">
+                                        <p className="text-xs text-gray-500 mb-1">Est. Reach Increase</p>
+                                        <p className="text-3xl font-black text-brand-green">+24%</p>
+                                        <div className="mt-3 flex flex-col items-center gap-1 text-[10px] text-gray-500">
+                                            <span>Current Baseline: <strong className="text-gray-700 dark:text-gray-300">4.2k</strong></span>
+                                            <span>AI Augmented: <strong className="text-brand-green">5.5k+</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Hit Score */}
+                                <div className="card flex items-center justify-center py-6">
+                                    <CircularRing score={generated ? 78 : 0} size={120} label="Hit Score" sublabel={generated ? 'High Potential' : ''} />
+                                </div>
+
+                                {/* Generated Content Preview */}
+                                {generated ? (
+                                    <div className="card space-y-4">
+                                        <div className="flex items-center justify-between">
+                                            <h3 className="font-bold text-gray-900 dark:text-white">Primary Asset</h3>
+                                            <div className="flex items-center gap-2">
+                                                <button className="text-xs text-gray-500 hover:text-brand-green transition-colors">📋 Copy All</button>
+                                                <button className="btn-primary text-xs py-1.5 px-3">Refine</button>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">The Hook</p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-300">क्या आप भी सर्दियों में त्वचा की समस्या से जूझ रही हैं 🌿 ✨</p>
+                                            <p className="text-xs text-gray-400 italic mt-1">(Eng: Are you also facing your skin's glow the winter?)</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Body Caption</p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-300">प्रकृति की शक्ति प्राकृतिक सामग्री से बेहतर कुछ नहीं है। जैविक एलोवेरा और कच्ची हल्दी का ये खास मिश्रण है, खासे आपकी त्वचा के लिए ✨</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Key Points</p>
+                                            <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                                                <li>🟢 100% प्राकृतिक सामग्री</li>
+                                                <li>🟢 कोई रासायनिक पदार्थ नहीं</li>
+                                                <li>🟢 सर्दी में देखभाल करें ले अपनी त्वचा</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Call to Action</p>
+                                                <p className="text-sm text-gray-700 dark:text-gray-300">अभी ऑर्डर करो और पाओ 🤩</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Smart Hashtags</p>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {['#WinterSkincare', '#SkinCareIndia', '#OrganicBeauty', '#NaturalGlow', '#DesiBrands'].map(tag => (
+                                                        <span key={tag} className="text-[10px] bg-gray-100 dark:bg-dark-600 text-gray-500 dark:text-gray-400 rounded-full px-2 py-0.5">{tag}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="border-t border-gray-200 dark:border-dark-500 pt-3 flex items-center justify-between text-xs text-gray-500">
+                                            <span>Generated in 1.2s · Optimized for Instagram</span>
+                                            <button className="text-brand-green hover:underline">Save to Drafts →</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="card flex flex-col items-center justify-center py-16 text-center">
+                                        <Sparkles size={40} className="text-gray-300 dark:text-gray-600 mb-4" />
+                                        <h3 className="font-bold text-gray-900 dark:text-white mb-2">No Content Generated Yet</h3>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs">Fill out the form on the left to see your AI-powered marketing strategy come to life.</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    ) : (
-                        <div className="text-center py-8 text-gray-600">
-                            <Zap size={32} className="mx-auto mb-3 opacity-20" />
-                            <p className="text-sm">Fill in the form and click Generate to preview your content here.</p>
+                    </div>
+                </main>
+
+                {/* Footer */}
+                <footer className="px-5 py-3 border-t border-gray-200 dark:border-dark-500 bg-white dark:bg-dark-800">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400 dark:text-gray-600">
+                        <p>© 2024 GrowMate. Built for Bharat's Creators.</p>
+                        <div className="flex gap-4">
+                            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-400">Privacy Policy</a>
+                            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-400">Terms of Service</a>
+                            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-400">Help Center</a>
                         </div>
-                    )}
-                </div>
-                </div> {/* end grid wrapper */}
-            </main>
+                    </div>
+                </footer>
+            </div>
         </div>
-    </div>
     )
 }

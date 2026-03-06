@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import DashboardHeader from '../components/DashboardHeader'
-import { Edit3, Plus, Users, Tag, ShoppingCart, AlertTriangle, TrendingUp, Sparkles, ExternalLink } from 'lucide-react'
+import { Edit3, Plus, Users, ShoppingCart, AlertTriangle, TrendingUp, Sparkles } from 'lucide-react'
 
 const segments = [
     {
@@ -63,9 +63,9 @@ export default function AudiencePersona() {
     const active = segments.find(s => s.id === activeId)!
 
     return (
-        <div className="flex min-h-screen bg-white dark:bg-dark-900">
+        <div className="flex min-h-screen bg-[#0d1117]">
             <Sidebar />
-            <div className="flex-1 sm:ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-[210px] flex flex-col">
                 <DashboardHeader title="Audience Personas" />
 
                 <main className="flex-1 p-8 space-y-8">

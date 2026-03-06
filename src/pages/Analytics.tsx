@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Heart, Zap, UserPlus, Wifi, Download, Calendar, Instagram, Linkedin, ChevronRight } from 'lucide-react'
 import Sidebar from '../components/Sidebar'
 import DashboardHeader from '../components/DashboardHeader'
@@ -14,7 +12,7 @@ const statCards = [
 const posts = [
     { title: 'How AI is changing the creator economy in...', platform: 'Instagram', score: 96, engagement: '12.4K', status: 'VIRAL', statusColor: 'text-brand-green bg-brand-green/10' },
     { title: 'Top 5 tips for scaling your small business...', platform: 'LinkedIn', score: 82, engagement: '8.2K', status: 'STEADY', statusColor: 'text-amber-400 bg-amber-400/10' },
-    { title: 'Behind the scenes: Growing GrowMate AI with...', platform: 'Instagram', score: 75, engagement: '5.1K', status: 'STEADY', statusColor: 'text-amber-400 bg-amber-400/10' },
+    { title: 'Behind the scenes: Growing GrowMate with...', platform: 'Instagram', score: 75, engagement: '5.1K', status: 'STEADY', statusColor: 'text-amber-400 bg-amber-400/10' },
 ]
 
 // SVG Engagement Chart
@@ -27,8 +25,6 @@ function EngagementChart() {
 
     const xs = points.map((_, i) => padX + (i / (points.length - 1)) * (width - padX * 2))
     const ys = points.map(v => height - padY - ((v / 100) * (height - padY * 2)))
-    const pathD = xs.map((x, i) => `${i === 0 ? 'M' : 'C'} ${x},${ys[i]}`).join(' ')
-
     // Smooth curve using bezier
     const smooth = () => {
         let d = `M ${xs[0]},${ys[0]}`
@@ -53,7 +49,7 @@ function EngagementChart() {
             {/* Dashed guide lines */}
             {[0.25, 0.5, 0.75].map(t => (
                 <line key={t} x1={padX} y1={padY + t * (height - padY * 2)} x2={width - padX} y2={padY + t * (height - padY * 2)}
-                    stroke="#1c2b1e" strokeWidth="1" strokeDasharray="4 4" />
+                    stroke="#1a2235" strokeWidth="1" strokeDasharray="4 4" />
             ))}
             {/* Area fill */}
             <path d={fillD} fill="url(#chartGrad)" />
@@ -62,7 +58,7 @@ function EngagementChart() {
             {/* Dots */}
             {xs.map((x, i) => (
                 <circle key={i} cx={x} cy={ys[i]} r={i === xs.length - 1 ? 5 : 3}
-                    fill={i === xs.length - 1 ? '#22c55e' : '#111a12'}
+                    fill={i === xs.length - 1 ? '#22c55e' : '#141b26'}
                     stroke="#22c55e" strokeWidth="2" />
             ))}
         </svg>
@@ -70,12 +66,10 @@ function EngagementChart() {
 }
 
 export default function Analytics() {
-    const [period, setPeriod] = useState('Last 30 Days')
-
     return (
-        <div className="flex min-h-screen bg-white dark:bg-dark-900">
+        <div className="flex min-h-screen bg-[#0d1117]">
             <Sidebar />
-            <div className="flex-1 sm:ml-52 flex flex-col">
+            <div className="flex-1 sm:ml-[210px] flex flex-col">
                 <DashboardHeader title="Analytics" />
 
                 <main className="flex-1 p-8 space-y-7">

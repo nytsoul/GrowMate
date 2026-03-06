@@ -1,59 +1,61 @@
-import { Bell, ChevronDown, Sun, Moon } from 'lucide-react'
+import { Bell, ChevronDown, Sun, Moon, Globe } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
+import { useNavigate } from 'react-router-dom'
+import Logo from './Logo'
 
 interface DashboardHeaderProps {
     title?: string
     userName?: string
-    subtitle?: string
 }
 
 function ThemeToggle() {
-    const {theme, toggleTheme} = useTheme();
+    const { theme, toggleTheme } = useTheme()
     return (
         <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors text-gray-400"
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-600 transition-colors text-gray-500 dark:text-gray-400"
             aria-label="Toggle theme"
         >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
         </button>
-    );
+    )
 }
 
 export default function DashboardHeader({
-    title,
     userName = 'Arpita Singh',
-    subtitle = 'Pro Creator',
 }: DashboardHeaderProps) {
-    // theme is accessed inside ThemeToggle when needed
+    const navigate = useNavigate()
     return (
-        <header className="flex items-center justify-between px-6 py-3 border-b border-gray-100 dark:border-dark-700 bg-white dark:bg-dark-800/80 backdrop-blur-sm sticky top-0 z-30">
-            {title ? (
-                <h1 className="text-lg font-bold text-dark-900 dark:text-white">{title}</h1>
-            ) : (
-                <div>
-                    <h1 className="text-xl font-bold text-dark-900 dark:text-white">
-                        Namaste, {userName.split(' ')[0]}! 👋
-                    </h1>
-                </div>
-            )}
+        <header className="flex items-center justify-between px-5 py-3 border-b border-gray-200 bg-white dark:border-dark-600 dark:bg-dark-800 sticky top-0 z-30">
+            {/* Left: Logo */}
+            <Logo size="sm" />
 
-            <div className="flex items-center gap-4">
-                {/* theme toggle */}
+            {/* Right */}
+            <div className="flex items-center gap-2">
                 <ThemeToggle />
-                <button className="relative p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-dark-600 text-gray-400 hover:text-dark-900 dark:hover:text-white transition-colors">
-                    <Bell size={18} />
+
+                {/* Language badge */}
+                <button className="hidden sm:flex items-center gap-1.5 text-xs font-medium text-gray-500 border border-gray-300 dark:text-gray-400 dark:border-dark-500 rounded-full px-3 py-1.5 hover:border-gray-400 dark:hover:border-dark-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+                    <Globe size={13} className="text-brand-green" />
+                    English (Bharat Mode)
+                    <ChevronDown size={11} />
+                </button>
+
+                {/* Bell */}
+                <button className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-600 text-gray-500 dark:text-gray-400 transition-colors">
+                    <Bell size={16} />
                     <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-brand-green rounded-full" />
                 </button>
-                <button className="flex items-center gap-2.5 hover:bg-gray-200 dark:hover:bg-dark-600 rounded-lg px-3 py-2 transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-xs font-bold">
+
+                {/* Avatar — navigates to profile */}
+                <button
+                    onClick={() => navigate('/profile')}
+                    className="flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-dark-600 rounded-lg px-2 py-1.5 transition-colors"
+                >
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                         {userName.split(' ').map(n => n[0]).join('')}
                     </div>
-                    <div className="text-left hidden sm:block">
-                        <p className="text-sm font-semibold text-dark-900 dark:text-white leading-tight">{userName}</p>
-                        <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-tight">{subtitle}</p>
-                    </div>
-                    <ChevronDown size={14} className="text-gray-400" />
+                    <ChevronDown size={12} className="hidden sm:block text-gray-500" />
                 </button>
             </div>
         </header>
