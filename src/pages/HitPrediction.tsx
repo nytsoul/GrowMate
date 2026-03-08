@@ -18,11 +18,11 @@ const tips = [
 
 export default function HitPrediction() {
     return (
-        <div className="flex min-h-screen bg-[#0d1117]">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-dark-900">
             <Sidebar />
             <div className="flex-1 sm:ml-[210px] flex flex-col">
                 <DashboardHeader title="Post Lab - Hit Prediction" />
-                <main className="flex-1 p-8">
+                <main className="flex-1 p-5">
                     <div className="w-full px-2 sm:px-0 space-y-6">
                         {/* Breadcrumb */}
                         <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
@@ -34,8 +34,8 @@ export default function HitPrediction() {
                 {/* Title */}
                 <div className="flex items-start justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-black text-white mb-1">Post Hit Prediction</h1>
-                        <p className="text-gray-400 text-sm">AI-powered analysis for your upcoming Instagram Reel</p>
+                        <h1 className="text-3xl font-black text-dark-900 dark:text-white mb-1">Post Hit Prediction</h1>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">AI-powered analysis for your upcoming Instagram Reel</p>
                     </div>
                     <div className="flex gap-3">
                         <button className="btn-secondary flex items-center gap-2 text-sm py-2">
@@ -52,7 +52,7 @@ export default function HitPrediction() {
                     <div className="card flex flex-col items-center gap-4 p-6 relative overflow-hidden">
                         <div className="absolute inset-0 bg-glow-green opacity-50" />
                         <div className="relative w-full flex items-center justify-between mb-1">
-                            <p className="font-bold text-white">Hit Score</p>
+                            <p className="font-bold text-dark-900 dark:text-white">Hit Score</p>
                             <div className="w-8 h-8 rounded-lg bg-brand-green/10 flex items-center justify-center text-brand-green">
                                 <BarChart3 size={16} />
                             </div>
@@ -62,19 +62,19 @@ export default function HitPrediction() {
                             {/* Sparkle icon */}
                             <span className="absolute -top-1 -right-1 text-brand-green text-lg animate-pulse-slow">✦</span>
                         </div>
-                        <p className="text-xs text-gray-400 text-center relative">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 text-center relative">
                             Your post is trending 12% higher than your average engagement rates for this time slot.
                         </p>
                         <div className="grid grid-cols-2 gap-3 w-full relative">
-                            <div className="bg-dark-800 rounded-xl p-3 text-center">
+                            <div className="bg-gray-50 dark:bg-dark-800 rounded-xl p-3 text-center">
                                 <p className="text-[10px] text-gray-500 uppercase mb-1">Recommended Format</p>
-                                <p className="text-sm font-bold text-white flex items-center justify-center gap-1.5">
+                                <p className="text-sm font-bold text-dark-900 dark:text-white flex items-center justify-center gap-1.5">
                                     <Crown size={13} className="text-amber-400" /> Instagram Reel
                                 </p>
                             </div>
-                            <div className="bg-dark-800 rounded-xl p-3 text-center">
+                            <div className="bg-gray-50 dark:bg-dark-800 rounded-xl p-3 text-center">
                                 <p className="text-[10px] text-gray-500 uppercase mb-1">Best Time to Post</p>
-                                <p className="text-sm font-bold text-white flex items-center justify-center gap-1.5">
+                                <p className="text-sm font-bold text-dark-900 dark:text-white flex items-center justify-center gap-1.5">
                                     <Clock size={13} className="text-brand-green" /> 7:30 PM Today
                                 </p>
                             </div>
@@ -85,7 +85,7 @@ export default function HitPrediction() {
                     <div className="card">
                         <div className="flex items-center gap-2 mb-5">
                             <span className="text-xl">👍</span>
-                            <h2 className="font-bold text-white text-lg">Content Strengths</h2>
+                            <h2 className="font-bold text-dark-900 dark:text-white text-lg">Content Strengths</h2>
                         </div>
                         <div className="grid sm:grid-cols-2 gap-4">
                             {strengths.map(({ icon, title, desc }) => (
@@ -94,7 +94,7 @@ export default function HitPrediction() {
                                         {icon}
                                     </div>
                                     <div>
-                                        <p className="font-semibold text-white text-sm mb-0.5">{title}</p>
+                                        <p className="font-semibold text-dark-900 dark:text-white text-sm mb-0.5">{title}</p>
                                         <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@ export default function HitPrediction() {
                         <div className="flex items-center justify-between mb-5">
                             <div className="flex items-center gap-2">
                                 <Lightbulb size={18} className="text-brand-green" />
-                                <h2 className="font-bold text-white">AI Improvement Tips</h2>
+                                <h2 className="font-bold text-dark-900 dark:text-white">AI Improvement Tips</h2>
                             </div>
                             <span className="badge-green text-[10px]">AI Generated</span>
                         </div>
@@ -122,7 +122,7 @@ export default function HitPrediction() {
                                             {icon}
                                         </div>
                                         <div>
-                                            <p className="font-semibold text-white text-sm">{title}</p>
+                                            <p className="font-semibold text-dark-900 dark:text-white text-sm">{title}</p>
                                             <p className="text-xs text-gray-500 mt-0.5">{sub}</p>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@ export default function HitPrediction() {
                             <div className="flex items-center justify-between mb-5">
                                 <div className="flex items-center gap-2">
                                     <Zap size={18} className="text-brand-green fill-current" />
-                                    <h2 className="font-bold text-white">Viral Potential Probability</h2>
+                                    <h2 className="font-bold text-dark-900 dark:text-white">Viral Potential Probability</h2>
                                 </div>
                                 <span className="text-2xl font-black text-brand-green">78%</span>
                             </div>
@@ -156,8 +156,8 @@ export default function HitPrediction() {
                 <div className="card border-brand-green/20 p-6 flex flex-col sm:flex-row items-center justify-between gap-5 bg-white/50 dark:bg-dark-700/50 relative overflow-hidden">
                     <div className="absolute inset-0 bg-glow-green opacity-30" />
                     <div className="relative">
-                        <h3 className="text-xl font-black text-white mb-1">Ready to publish?</h3>
-                        <p className="text-sm text-gray-400">Post now to capture the peak evening audience in India.</p>
+                        <h3 className="text-xl font-black text-dark-900 dark:text-white mb-1">Ready to publish?</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Post now to capture the peak evening audience in India.</p>
                     </div>
                     <div className="flex gap-3 relative">
                         <button className="btn-secondary text-sm px-6 py-2.5">Schedule Post</button>

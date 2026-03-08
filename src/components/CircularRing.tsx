@@ -48,7 +48,7 @@ export default function CircularRing({
                 </svg>
                 {/* Center content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-4xl font-black text-white">{score}</span>
+                    <span className="text-4xl font-black text-dark-900 dark:text-white">{score}</span>
                     {label && <span className="text-[11px] text-gray-400 uppercase tracking-widest">{label}</span>}
                 </div>
             </div>

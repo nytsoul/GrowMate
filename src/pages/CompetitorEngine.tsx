@@ -20,11 +20,11 @@ export default function CompetitorEngine() {
     const [analyzed, setAnalyzed] = useState(false)
 
     return (
-        <div className="flex min-h-screen bg-[#0d1117]">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-dark-900">
             <Sidebar />
             <div className="flex-1 sm:ml-[210px] flex flex-col">
                 <DashboardHeader title="Competitor Engine" />
-                <main className="flex-1 p-8">
+                <main className="flex-1 p-5">
                     <div className="w-full px-2 sm:px-0 space-y-8">
                         {/* Header */}
                         <div className="flex items-start justify-between">
@@ -128,7 +128,7 @@ export default function CompetitorEngine() {
                                 <div className="card">
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="text-lg">🎨</span>
-                                        <p className="font-semibold text-white text-sm">Content Style</p>
+                                        <p className="font-semibold text-dark-900 dark:text-white text-sm">Content Style</p>
                                     </div>
                                     <p className="text-xs text-gray-400 mb-3 leading-relaxed">High-energy, Hinglish commentary, focuses on budget smartphones with fast-cut editing.</p>
                                     <div>
@@ -146,10 +146,10 @@ export default function CompetitorEngine() {
                                 <div className="card">
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="text-lg">📅</span>
-                                        <p className="font-semibold text-white text-sm">Posting Frequency</p>
+                                        <p className="font-semibold text-dark-900 dark:text-white text-sm">Posting Frequency</p>
                                     </div>
                                     <div className="flex items-baseline gap-1 mb-3">
-                                        <span className="text-3xl font-black text-white">4.2</span>
+                                        <span className="text-3xl font-black text-dark-900 dark:text-white">4.2</span>
                                         <span className="text-xs text-gray-500">posts/week</span>
                                     </div>
                                     <div className="flex items-end gap-1 h-10">
@@ -163,7 +163,7 @@ export default function CompetitorEngine() {
                                 <div className="card">
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="text-lg">📈</span>
-                                        <p className="font-semibold text-white text-sm">Engagement Trend</p>
+                                        <p className="font-semibold text-dark-900 dark:text-white text-sm">Engagement Trend</p>
                                     </div>
                                     <div className="flex items-end gap-1 h-14 mb-2">
                                         {[2, 2, 3, 2, 3, 4, 5].map((h, i) => (
@@ -179,7 +179,7 @@ export default function CompetitorEngine() {
                         <div className="card">
                             <div className="flex items-center gap-3 mb-5">
                                 <div className="w-2 h-2 rounded-full bg-brand-green" />
-                                <h2 className="font-bold text-white text-sm uppercase tracking-widest">AI-Suggested Opportunities (Gaps)</h2>
+                                <h2 className="font-bold text-dark-900 dark:text-white text-sm uppercase tracking-widest">AI-Suggested Opportunities (Gaps)</h2>
                             </div>
                             <div className="grid sm:grid-cols-2 gap-4">
                                 {gaps.map(({ num, title, desc }) => (
@@ -188,7 +188,7 @@ export default function CompetitorEngine() {
                                             {num}
                                         </div>
                                         <div>
-                                            <p className="font-semibold text-white text-sm mb-1">{title}</p>
+                                            <p className="font-semibold text-dark-900 dark:text-white text-sm mb-1">{title}</p>
                                             <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
                                         </div>
                                     </div>
@@ -198,7 +198,7 @@ export default function CompetitorEngine() {
 
                         {/* Comparison Matrix */}
                         <div className="card overflow-hidden">
-                            <h2 className="font-bold text-white mb-4">Direct Comparison Matrix</h2>
+                            <h2 className="font-bold text-dark-900 dark:text-white mb-4">Direct Comparison Matrix</h2>
                             <table className="w-full">
                                 <thead>
                                     <tr className="border-b border-dark-500">
@@ -211,7 +211,7 @@ export default function CompetitorEngine() {
                                     {matrix.map(({ metric, you, comp, verdict, win }) => (
                                         <tr key={metric} className="border-b border-gray-200/50 dark:border-dark-600/50 hover:bg-gray-100 dark:hover:bg-dark-700/50 transition-colors">
                                             <td className="px-4 py-4 text-sm text-gray-300">{metric}</td>
-                                            <td className="px-4 py-4 text-sm font-medium text-white">{you}</td>
+                                            <td className="px-4 py-4 text-sm font-medium text-dark-900 dark:text-white">{you}</td>
                                             <td className="px-4 py-4 text-sm text-gray-400">{comp}</td>
                                             <td className="px-4 py-4">
                                                 <span className={`flex items-center gap-1.5 text-sm font-semibold ${win ? 'text-brand-green' : 'text-amber-400'}`}>

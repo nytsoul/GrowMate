@@ -67,17 +67,17 @@ function EngagementChart() {
 
 export default function Analytics() {
     return (
-        <div className="flex min-h-screen bg-[#0d1117]">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-dark-900">
             <Sidebar />
             <div className="flex-1 sm:ml-[210px] flex flex-col">
                 <DashboardHeader title="Analytics" />
 
-                <main className="flex-1 p-8 space-y-7">
+                <main className="flex-1 p-5 space-y-7">
                     {/* Header */}
                     <div className="flex items-start justify-between">
                         <div>
                             <h1 className="text-3xl font-black text-dark-900 dark:text-white mb-1">Analytics & Performance</h1>
-                            <p className="text-gray-400 text-sm">Real-time AI insights for your creative content across India's top platforms.</p>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm">Real-time AI insights for your creative content across India's top platforms.</p>
                         </div>
                         <div className="flex gap-3">
                             <button className="btn-secondary flex items-center gap-2 text-sm py-2">
